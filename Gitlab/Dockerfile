@@ -1,0 +1,25 @@
+ARG UBUNTU_VER=latest
+FROM i386/ubuntu:${UBUNTU_VER}
+
+LABEL maintainer "jwduck (e_matthews1@126.com)"
+
+ARG LINUX_NAME=ubuntu
+ARG UBUNTU_VER
+RUN echo ${LINUX_NAME} > image_version && echo ${UBUNTU_VER} >> image_version
+
+RUN apt-get update -qq && \
+    apt-get install -q -y \
+        ca-certificates \
+        clang-format-5.0 \
+        cmake \
+        g++ \
+        curl \
+	git \
+        && \
+        curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-386 && \
+        chmod +x /usr/local/bin/gitlab-runner && \
+        mkdir /gitlab-runner && \
+	mkdir /streams && \
+        gitlab-runner install --user=root --working-directory=/gitlab-runner && \
+        gitlab-runner start && \
+    apt-get clean
