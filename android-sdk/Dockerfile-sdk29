@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Update apt-get & Install packages
 RUN apt update && \
     apt install -y openjdk-8-jdk  bash wget unzip make file && \
-    apt clean
+	apt clean
 
 # Export JAVA_HOME variable
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
@@ -24,6 +24,8 @@ ENV ANDROID_HOME /usr/local/android-sdk-linux
 ENV PATH $PATH:$ANDROID_HOME/tools
 ENV PATH $PATH:$ANDROID_HOME/platform-tools
 ENV PATH $PATH:$ANDROID_HOME/build-tools/29.0.3
+ENV ANDROID_VERSION=29 \
+    ANDROID_BUILD_TOOLS_VERSION=29.0.3
 
 RUN echo yes | android update sdk --no-ui --all --filter platform-tools             && \
     echo yes | android update sdk --no-ui --all --filter build-tools-29.0.3        && \
@@ -31,5 +33,11 @@ RUN echo yes | android update sdk --no-ui --all --filter platform-tools         
     echo yes | android update sdk --no-ui --all --filter extra-android-m2repository && \
     echo yes | android update sdk --no-ui --all --filter extra-google-m2repository  && \
     echo yes | android update sdk --no-ui --all --filter extra-android-support
+
+# Install Android SDK Packages
+RUN yes | $ANDROID_HOME/tools/bin/sdkmanager --update
+RUN yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses && yes | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" \
+    "platforms;android-${ANDROID_VERSION}" \
+    "platform-tools"
 
 RUN echo "sdk.dir=$ANDROID_HOME" > local.properties
