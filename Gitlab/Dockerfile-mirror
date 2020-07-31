@@ -1,0 +1,23 @@
+FROM cidana/androidsdk:29.r10e
+# Install cmake
+RUN apt update -qq && \
+    apt install -y git && \
+    apt -y install g++ && \
+    apt -y install build-essential && \
+    apt install -y curl && \
+    wget https://cmake.org/files/v3.10/cmake-3.10.0-rc1.tar.gz && \
+    tar -zxf cmake-3.10.0-rc1.tar.gz && \
+    cd cmake-3.10.0-rc1 && \
+    ./configure && \
+    make && \
+    make install && \
+    cmake --version && \
+    cd .. && \
+    rm cmake-3.10.0-rc1.tar.gz && \
+# Install gitlab-runner
+    curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 && \
+    chmod +x /usr/local/bin/gitlab-runner && \
+    mkdir /gitlab-runner && \
+    gitlab-runner install --user=root --working-directory=/gitlab-runner && \
+    gitlab-runner start && \
+    apt-get clean
