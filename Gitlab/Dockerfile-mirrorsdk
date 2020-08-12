@@ -1,0 +1,36 @@
+FROM cidana/gitlabrunner:mirror
+# Export GSTREAMER_ROOT_ANDROID variable
+ENV GSTREAMER_ROOT_ANDROID /gstreamer
+ENV PATH $PATH:$GSTREAMER_ROOT_ANDROID
+
+RUN  wget https://cmake.org/files/v3.10/cmake-3.10.2.tar.gz && \
+     tar -zxvf cmake-3.10.2.tar.gz && \
+     cd cmake-3.10.2 && \
+     ./configure && \
+     make && \
+     make install && \
+     cmake --version && \
+     cd .. && \
+     rm cmake-3.10.2.tar.gz && \
+     rm -rf cmake-3.10.0-rc1 && \
+     apt update && \
+     apt install -y ninja-build && \
+# Gstreamer
+     apt install -y pkg-config && \
+     apt install -y doxygen && \
+     apt install -y bison && \
+     apt install -y libgstreamer* && \
+     apt install -y valgrind && \
+     apt install -y gettext && \
+     apt install -y gtk-doc-tools && \
+     apt install -y gobject-introspection && \
+     apt clean
+
+# Gstreamer add: \\fileserver\RD\ProgramTools\GStreamer	 
+COPY gstreamer-1.0-android-universal-1.14.0.tar.bz2 /
+RUN mkdir /gstreamer && \
+    cd / && \
+    tar jxvf gstreamer-1.0-android-universal-1.14.0.tar.bz2 -C /gstreamer
+	
+
+
