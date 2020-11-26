@@ -5,7 +5,7 @@ USER root
 
 # Never ask for confirmations
 ENV DEBIAN_FRONTEND noninteractive
-ENV ANDROID_SDK_VERSION 22
+ENV ANDROID_SDK_VERSION 25
 ENV ANDROID_SDK_TOOLS 25.0.0
 # Update apt-get & Install packages
 RUN apt update && \
