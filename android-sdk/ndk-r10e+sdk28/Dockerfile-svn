@@ -1,0 +1,9 @@
+# android build environment
+
+FROM cidana/androidsdk:28.r10e
+USER root
+
+# Update apt-get & Install packages
+RUN apt update && \
+    apt install -y subversion  python && \
+    apt clean
