@@ -3,7 +3,7 @@ USER root
 
 # Install Dependency Package
 RUN apt-get update -qqy && \
-    apt install -y openjdk-8-jdk  vim bash wget unzip make file gcc g++ build-essential libcunit1 libcunit1-dev gcovr && \
+    apt install -y openjdk-8-jdk  vim bash wget unzip make file gcc g++ build-essential libcunit1 libcunit1-dev gcovr git && \
     apt-get clean
 
 # JAVA PATH 
