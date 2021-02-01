@@ -1,4 +1,3 @@
-FROM ubuntu:16.04
 FROM openjdk:8u212-jdk
 
 WORKDIR /home/jenkins/
