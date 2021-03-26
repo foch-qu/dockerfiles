@@ -1,0 +1,5 @@
+FROM cidana/gitlabrunner:mirror
+    
+RUN  echo yes | sdkmanager  \
+    "platforms;android-30"  \
+    "build-tools;30.0.1"
